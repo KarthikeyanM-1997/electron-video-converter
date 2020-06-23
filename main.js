@@ -21,7 +21,7 @@ function createWindow() {
         },
         icon: iconPath,
         title: "Electron MP4 to HLS Converter",
-        menuBarVisible : false
+        menuBarVisible: false
     })
 
     Menu.setApplicationMenu(null);
@@ -129,7 +129,7 @@ function tryConversion(input, output) {
         .outputOptions('-hls_time 60')
         .on('error', function (err) {
             console.log('An error occurred: ' + err.message);
-            win.webContents.send("ipc-message", JSON.stringify({ "progress": -1 }));
+            win.webContents.send("ipc-message", JSON.stringify({ "progress": -1, "error": err.message }));
         })
         .on('progress', function (progress) {
             console.log(progress.percent);

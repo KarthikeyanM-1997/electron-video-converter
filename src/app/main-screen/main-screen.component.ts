@@ -31,6 +31,10 @@ export class MainScreenComponent implements OnInit {
 
   currentProgressPercent = 0;
 
+  showError = false;
+
+  errorMessage = "";
+
   constructor(private cdr: ChangeDetectorRef) {
     if ((<any>window).require) {
       try {
@@ -81,6 +85,8 @@ export class MainScreenComponent implements OnInit {
             this.currentlyProcessing = true;
           }
           else if (msg['progress'] === -1) {
+            this.showError = true;
+            this.errorMessage = msg['error'];
             this.currentlyProcessing = false;
           }
           else if (msg['progress'] === 100) {
@@ -89,6 +95,7 @@ export class MainScreenComponent implements OnInit {
           }
           else {
             this.currentlyProcessing = true;
+            this.showError = false;
           }
           cdr.detectChanges();
         });
